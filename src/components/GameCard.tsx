@@ -11,8 +11,7 @@ interface GameCardProps {
 }
 
 /**
- * Componente Tarjeta de Juego estilizado con temática Gamer/Dark Mode.
- * Muestra la miniatura, título, género, plataforma y permite marcar como favorito.
+ * Componente sencillo de Tarjeta de Juego para proyectos estudiantiles.
  */
 export const GameCard: React.FC<GameCardProps> = ({ game, onPress }) => {
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -23,10 +22,10 @@ export const GameCard: React.FC<GameCardProps> = ({ game, onPress }) => {
   return (
     <TouchableOpacity
       style={styles.card}
-      activeOpacity={0.85}
+      activeOpacity={0.8}
       onPress={() => onPress(game)}
     >
-      {/* Imagen miniatura del juego */}
+      {/* Imagen del juego */}
       <View style={styles.imageContainer}>
         <Image
           source={{ uri: game.thumbnail }}
@@ -36,29 +35,23 @@ export const GameCard: React.FC<GameCardProps> = ({ game, onPress }) => {
 
         {/* Badge de Plataforma */}
         <View style={[styles.platformBadge, { backgroundColor: isWeb ? Colors.browserBadge : Colors.pcBadge }]}>
-          <Ionicons
-            name={isWeb ? 'globe-outline' : 'desktop-outline'}
-            size={12}
-            color="#FFF"
-          />
-          <Text style={styles.platformText}>{isWeb ? 'BROWSER' : 'PC WIN'}</Text>
+          <Text style={styles.platformText}>{isWeb ? 'Navegador' : 'PC'}</Text>
         </View>
 
-        {/* Botón de Favorito flotante */}
+        {/* Botón de estrella de favorito */}
         <TouchableOpacity
           style={styles.favoriteButton}
           onPress={() => toggleFavorite(game)}
-          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
           <Ionicons
             name={favorite ? 'star' : 'star-outline'}
-            size={20}
-            color={favorite ? Colors.favorite : Colors.textMuted}
+            size={18}
+            color={favorite ? Colors.favorite : '#FFF'}
           />
         </TouchableOpacity>
       </View>
 
-      {/* Contenido textual */}
+      {/* Info básica */}
       <View style={styles.content}>
         <Text style={styles.title} numberOfLines={1}>
           {game.title}
@@ -69,15 +62,8 @@ export const GameCard: React.FC<GameCardProps> = ({ game, onPress }) => {
         </Text>
 
         <View style={styles.footer}>
-          {/* Badge de Género */}
-          <View style={styles.genreBadge}>
-            <Text style={styles.genreText}>{game.genre}</Text>
-          </View>
-
-          {/* Publisher/Developer */}
-          <Text style={styles.developerText} numberOfLines={1}>
-            {game.developer}
-          </Text>
+          <Text style={styles.genreTag}>{game.genre}</Text>
+          <Text style={styles.developerText} numberOfLines={1}>{game.developer}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -87,19 +73,14 @@ export const GameCard: React.FC<GameCardProps> = ({ game, onPress }) => {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.surface,
-    borderRadius: 12,
-    marginBottom: 16,
+    borderRadius: 8,
+    marginBottom: 12,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: Colors.surfaceLight,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
   },
   imageContainer: {
-    height: 160,
+    height: 140,
     width: '100%',
     position: 'relative',
   },
@@ -109,35 +90,31 @@ const styles = StyleSheet.create({
   },
   platformBadge: {
     position: 'absolute',
-    top: 10,
-    left: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
-    gap: 4,
+    top: 8,
+    left: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
   },
   platformText: {
     color: '#FFF',
     fontSize: 10,
     fontWeight: 'bold',
-    letterSpacing: 0.5,
   },
   favoriteButton: {
     position: 'absolute',
-    top: 10,
-    right: 10,
-    backgroundColor: 'rgba(15, 23, 42, 0.75)',
-    borderRadius: 20,
-    padding: 6,
+    top: 8,
+    right: 8,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    borderRadius: 15,
+    padding: 5,
   },
   content: {
-    padding: 12,
+    padding: 10,
   },
   title: {
     color: Colors.textPrimary,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 'bold',
     marginBottom: 4,
   },
@@ -145,23 +122,14 @@ const styles = StyleSheet.create({
     color: Colors.textSecondary,
     fontSize: 12,
     lineHeight: 16,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   footer: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 4,
+    alignItems: 'center',
   },
-  genreBadge: {
-    backgroundColor: 'rgba(99, 102, 241, 0.15)',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: 'rgba(99, 102, 241, 0.4)',
-  },
-  genreText: {
+  genreTag: {
     color: Colors.secondary,
     fontSize: 11,
     fontWeight: '600',
@@ -169,7 +137,6 @@ const styles = StyleSheet.create({
   developerText: {
     color: Colors.textMuted,
     fontSize: 11,
-    maxWidth: '50%',
   },
 });
 
