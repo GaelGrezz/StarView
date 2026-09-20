@@ -11,6 +11,9 @@ export default function AppNavigator() {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen
+        options={
+          {headerShown: false}
+        }
           name="Home"
           component={HomeScreen}
         />
