@@ -8,9 +8,9 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Linking,
-  SafeAreaView,
   Dimensions
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { GameDetail } from '../types/game';
 import { FreeToGameAPI } from '../api/freeToGameApi';

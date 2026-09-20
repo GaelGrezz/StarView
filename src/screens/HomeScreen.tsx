@@ -5,9 +5,9 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
-  RefreshControl,
-  SafeAreaView
+  RefreshControl
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Game, PlatformFilterType } from '../types/game';
 import { FreeToGameAPI } from '../api/freeToGameApi';
 import Colors from '../theme/colors';
