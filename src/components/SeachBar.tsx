@@ -42,7 +42,7 @@ export default function SearchBar({
           alignItems: "center",
           gap: 10,
           borderRadius: 10,
-          borderWidth: 0.5,
+          borderWidth: 0,
           paddingLeft: 12,
           paddingRight: 36,
           height: 46, 
