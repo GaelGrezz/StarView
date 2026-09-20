@@ -69,7 +69,7 @@ export default function SearchBar({
             paddingVertical: 0,
             marginVertical: 0,
             alignSelf: "stretch",
-            textAlignVertical: "center", // Alinea el texto en el centro exacto en Android
+            textAlignVertical: "center",
           }}
         />
       </View>
