@@ -17,13 +17,23 @@ export default function AppNavigator() {
             headerShown: false,
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="planet-outline" size={size} color={color} />
-            )
+            ),
           }}
           name="Buscar"
           component={HomeScreen}
         />
 
-        <Tab.Screen name="Categories" component={CategoriesScreen} />
+        <Tab.Screen
+          options={{
+            headerShown: false,
+            tabBarActiveTintColor: "black",
+            tabBarIcon: ({color, size}) => (
+              <Ionicons name="eye-outline" color={color} size={size} />
+            ),
+          }}
+          name="Categorías"
+          component={CategoriesScreen}
+        />
         <Tab.Screen name="Favorites" component={FavoriteScreen} />
       </Tab.Navigator>
     </NavigationContainer>

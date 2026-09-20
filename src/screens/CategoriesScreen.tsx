@@ -1,9 +1,14 @@
-import { View, Text } from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
+import { SafeAreaFrameContext } from "react-native-safe-area-context";
+import { HeaderComponent } from '../components/HeaderComponent';
 
-export default function HomeScreen(){
+export default function HomeScreen() {
+
     return (
-        <View>
-            <Text>Categories Screen</Text>
-        </View>
-    )
+    <SafeAreaView>
+      <View>
+        <HeaderComponent icon = "eye" />
+      </View>
+    </SafeAreaView>
+  );
 }
