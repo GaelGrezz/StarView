@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
-    "splash":{
+    "splash": {
       "backgroundColor": "#0B3D91"
     },
     "ios": {
@@ -16,7 +16,8 @@
     },
     "web": {},
     "plugins": [
-      "expo-splash-screen"
+      "expo-splash-screen",
+      "@react-native-vector-icons/ionicons"
     ]
   }
 }
