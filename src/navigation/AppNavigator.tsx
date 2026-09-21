@@ -34,7 +34,14 @@ export default function AppNavigator() {
           name="Categorías"
           component={CategoriesScreen}
         />
-        <Tab.Screen name="Favorites" component={FavoriteScreen} />
+        <Tab.Screen name="Favorites" component={FavoriteScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+              <Ionicons name="heart" size={size} color={color} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
