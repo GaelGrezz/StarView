@@ -45,8 +45,7 @@ export default function CategoryScreen() {
             loading={loading}
             error={error}
             emptyMessage={`No se encontraron imágenes para ${selectedCategory.label}`}
-            padding={350}
-          />
+            padding={350} horizontal={true}          />
         </View>
 
         <View

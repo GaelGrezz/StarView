@@ -1,21 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
 import { HeaderComponent } from "../components/HeaderComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SearchResultsView, { SectionData } from "../components/SearchResultsView";
-import { AstronomyMedia } from "../services/nasa/types";
+import { useFavorites } from "../context/FavoritesContext";
 
 export default function FavoriteScreen() {
-  // Estado local para los elementos guardados (de momento array vacío)
-  const [favoriteItems, setFavoriteItems] = useState<AstronomyMedia[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const { favorites } = useFavorites();
 
-  // Adaptamos los datos guardados a la estructura SectionData[]
-  const favoriteSections: SectionData[] = favoriteItems.length > 0
+  const favoriteSections: SectionData[] = favorites.length > 0
     ? [
         {
           title: "Guardados",
-          data: favoriteItems,
+          data: favorites,
         },
       ]
     : [];
@@ -28,10 +25,11 @@ export default function FavoriteScreen() {
         <View style={{ flex: 1 }}>
           <SearchResultsView
             sections={favoriteSections}
-            loading={loading}
+            loading={false}
             error={null}
             padding={20}
             emptyMessage="Aquí aparecerán tu contenido favorito ¡Sin conexión!"
+            horizontal= {false}
           />
         </View>
       </SafeAreaView>
