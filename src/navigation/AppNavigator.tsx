@@ -36,6 +36,7 @@ export default function AppNavigator() {
         />
         <Tab.Screen name="Favorites" component={FavoriteScreen}
         options={{
+          tabBarActiveTintColor: "red",
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
               <Ionicons name="heart" size={size} color={color} />

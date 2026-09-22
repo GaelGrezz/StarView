@@ -50,7 +50,7 @@ export default function HomeScreen() {
         ListEmptyComponent={
           !loading ? (
             <Text
-              style={{ textAlign: "center", color: "#778DA9", marginTop: 20 }}
+              style={{ textAlign: "center", color: "#0350b5", marginTop: 20 }}
             >
               Ingresa un término para explorar el cosmos
             </Text>
