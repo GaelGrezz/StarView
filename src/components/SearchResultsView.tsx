@@ -26,17 +26,31 @@ interface ISearchResultsView {
   horizontal: boolean;
 }
 
-function MediaCardItem({ img }: { img: AstronomyMedia }) {
+interface IMediaCardItem{
+  img: AstronomyMedia;
+  horizontal?: boolean;
+}
+
+function MediaCardItem({ img, horizontal }: IMediaCardItem) {
   const { isFavorite, toggleFavorite } = useFavorites();
   const fav = isFavorite(img.id);
 
   return (
     <View
-      style={{
-        width: 200,
-        marginRight: 12,
-        borderRadius: 8,
-      }}
+      style={
+        horizontal
+          ? {
+              width: 200,
+              marginRight: 12,
+              borderRadius: 8,
+            }
+          : {
+              width: "95%",
+              marginRight: 12,
+              borderRadius: 8,
+              marginBottom: 25,
+            }
+      }
     >
       {img.imageUrl ? (
         <Image
@@ -64,15 +78,6 @@ function MediaCardItem({ img }: { img: AstronomyMedia }) {
           gap: 10,
         }}
       >
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {
-            console.log("Ver detalles de:", img.title);
-          }}
-        >
-          <Ionicons name={"eye-outline"} size={20} color="black" />
-        </TouchableOpacity>
-
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={() => toggleFavorite(img)}
@@ -146,7 +151,9 @@ export default function SearchResultsView({
           keyExtractor={(img, index) =>
             img.id ? img.id.toString() : index.toString()
           }
-          renderItem={({ item: img }) => <MediaCardItem img={img} />}
+          renderItem={({ item: img }) => (
+            <MediaCardItem img={img} horizontal = {horizontal} />
+          )}
         />
       )}
     />
