@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { AstronomyMedia } from "../services/nasa/types";
 import Ionicons from "@react-native-vector-icons/ionicons";
+import { useFavorites } from "../context/FavoritesContext"; // Importamos el Hook
 
 export interface SectionData {
   title: string;
@@ -22,19 +23,34 @@ interface ISearchResultsView {
   error: string | null;
   emptyMessage?: string;
   padding: number;
+  horizontal: boolean;
 }
 
-// Subcomponente individual para manejar el estado visual del botón de favoritos
-function MediaCardItem({ img }: { img: AstronomyMedia }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+interface IMediaCardItem{
+  img: AstronomyMedia;
+  horizontal?: boolean;
+}
+
+function MediaCardItem({ img, horizontal }: IMediaCardItem) {
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const fav = isFavorite(img.id);
 
   return (
     <View
-      style={{
-        width: 200,
-        marginRight: 12,
-        borderRadius: 8,
-      }}
+      style={
+        horizontal
+          ? {
+              width: 200,
+              marginRight: 12,
+              borderRadius: 8,
+            }
+          : {
+              width: "95%",
+              marginRight: 12,
+              borderRadius: 8,
+              marginBottom: 25,
+            }
+      }
     >
       {img.imageUrl ? (
         <Image
@@ -64,24 +80,12 @@ function MediaCardItem({ img }: { img: AstronomyMedia }) {
       >
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => {
-            console.log("Ver detalles de:", img.title);
-          }}
-        >
-          <Ionicons name={"eye-outline"} size={20} color="black" />
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => {
-            setIsFavorite(!isFavorite);
-            console.log("Guardar a favoritos:", img.title);
-          }}
+          onPress={() => toggleFavorite(img)}
         >
           <Ionicons
-            name={isFavorite ? "heart" : "heart-outline"}
+            name={fav ? "heart" : "heart-outline"}
             size={20}
-            color={isFavorite ? "#FF4D4D" : "black"}
+            color={fav ? "#FF4D4D" : "black"}
           />
         </TouchableOpacity>
       </View>
@@ -95,6 +99,7 @@ export default function SearchResultsView({
   error,
   emptyMessage = "Ingresa un término para explorar el cosmos",
   padding,
+  horizontal = true,
 }: ISearchResultsView) {
   if (loading) {
     return (
@@ -131,7 +136,7 @@ export default function SearchResultsView({
       ListEmptyComponent={
         !loading ? (
           <Text
-            style={{ textAlign: "center", color: "#0350b5", marginTop: 20 }}
+            style={{ textAlign: "center", color: "#778DA9", marginTop: 20 }}
           >
             {emptyMessage}
           </Text>
@@ -141,12 +146,14 @@ export default function SearchResultsView({
         <FlatList
           style={{ marginLeft: 20, marginBottom: 20 }}
           data={item}
-          horizontal={true}
+          horizontal={horizontal}
           showsHorizontalScrollIndicator={false}
           keyExtractor={(img, index) =>
             img.id ? img.id.toString() : index.toString()
           }
-          renderItem={({ item: img }) => <MediaCardItem img={img} />}
+          renderItem={({ item: img }) => (
+            <MediaCardItem img={img} horizontal = {horizontal} />
+          )}
         />
       )}
     />
