@@ -1,49 +1,63 @@
-import {
-  View,
-  Text,
-  SafeAreaView,
-  SafeAreaViewBase,
-  useWindowDimensions,
-} from "react-native";
-import { SafeAreaFrameContext } from "react-native-safe-area-context";
+import { View, Text, useWindowDimensions, StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { HeaderComponent } from "../components/HeaderComponent";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CategoryList } from "../components/CategoryList";
 import { NasaQueries } from "../constants/NasaQueries";
-import Ionicons from "@react-native-vector-icons/ionicons";
+import { useNasaSearch } from "../hooks/useNasaSearch";
+import SearchResultsView from "../components/SearchResultsView";
 
 export default function CategoryScreen() {
   const [selectedCategory, setSelectedCategory] = useState(NasaQueries[0]);
-
   const { height } = useWindowDimensions();
+
+  // Consumimos la API mediante el hook personalizado
+  const { sections, loading, error, executeSearch } = useNasaSearch();
+
+  // Cada vez que cambia selectedCategory, ejecutamos la búsqueda en la API de la NASA
+  useEffect(() => {
+    if (selectedCategory?.searchQuery) {
+      executeSearch({ term: selectedCategory.searchQuery });
+    }
+  }, [selectedCategory, executeSearch]);
 
   const handleSelectCategory = (category) => {
     setSelectedCategory(category);
-    // Aquí es donde tu compañero consumirá la API de la NASA pasando el `category.searchQuery` o `category.id`
-    console.log(
-      "Categoría seleccionada para consumir API:",
-      category.searchQuery,
-    );
   };
 
   return (
-    <SafeAreaView>
-      <View style={{ height: height, position: "relative"}}>
+    <SafeAreaView edges={["left", "right", "top"]}>
+      <StatusBar barStyle="light-content" />
+      <View style={{ height, position: "relative" }}>
+        {/* Encabezado */}
         <HeaderComponent icon="eye" />
-        <View
-          style={{
-            margin: 20,
-          }}
-        >
-          <Text style={{ fontSize: 20 }}>Resultado de: </Text>
-          <Text style={{ fontSize: 30, fontWeight: "bold" }}>
+
+        <View style={{ marginHorizontal: 20, marginTop: 10 }}>
+          <Text style={{ marginTop: 25, fontSize: 16 }}>Resultado de:</Text>
+          <Text style={{ marginBottom: 10, fontSize: 28, fontWeight: "bold" }}>
             {selectedCategory.label}
           </Text>
         </View>
+
+        <View>
+          <SearchResultsView
+            sections={sections}
+            loading={loading}
+            error={error}
+            emptyMessage={`No se encontraron imágenes para ${selectedCategory.label}`}
+            padding={350}
+          />
+        </View>
+
         <View
           style={{
+            backgroundColor: "white",
+            padding: 5,
             position: "absolute",
-            bottom: "15%",
+            bottom: "10%",
+            marginBottom: 20,
+            left: 0,
+            right: 0,
           }}
         >
           <CategoryList
