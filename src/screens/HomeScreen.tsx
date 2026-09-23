@@ -40,8 +40,7 @@ export default function HomeScreen() {
         loading={loading}
         error={error}
         emptyMessage={`No se encontraron imágenes para ${sections}`}
-        padding={350}
-      />
+        padding={125} horizontal={true}      />
     </SafeAreaView>
   );
 }

@@ -22,12 +22,12 @@ export default function FavoriteScreen() {
       <SafeAreaView style={{ flex: 1 }}>
         <HeaderComponent icon="heart" />
         
-        <View style={{ flex: 1 }}>
+        <View>
           <SearchResultsView
             sections={favoriteSections}
             loading={false}
             error={null}
-            padding={20}
+            padding={0}
             emptyMessage="Aquí aparecerán tu contenido favorito ¡Sin conexión!"
             horizontal= {false}
           />
