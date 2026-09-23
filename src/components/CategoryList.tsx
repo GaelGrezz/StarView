@@ -16,6 +16,7 @@ export const CategoryList = ({
         data={NasaQueries}
         keyExtractor={(item) => item.id}
         horizontal={horizontal}
+        contentContainerStyle={{ paddingBottom: 20}}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
