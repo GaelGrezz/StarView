@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "StarView",
+    "slug": "StarView",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#0B3D91"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {},
+    "plugins": [
+      "expo-splash-screen",
+      "@react-native-vector-icons/ionicons"
+    ]
+  }
+}
