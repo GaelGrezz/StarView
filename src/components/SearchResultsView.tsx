@@ -7,10 +7,11 @@ import {
   ActivityIndicator,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { AstronomyMedia } from "../services/nasa/types";
 import Ionicons from "@react-native-vector-icons/ionicons";
-import { useFavorites } from "../context/FavoritesContext"; // Importamos el Hook
+import { useFavorites } from "../context/FavoritesContext"; 
 
 export interface SectionData {
   title: string;
@@ -34,6 +35,15 @@ interface IMediaCardItem{
 function MediaCardItem({ img, horizontal }: IMediaCardItem) {
   const { isFavorite, toggleFavorite } = useFavorites();
   const fav = isFavorite(img.id);
+
+  const handleToggleFav = async (img)=>{
+    const nextState = !fav
+    await toggleFavorite(img)
+
+    const text = nextState ? "Guardado." : "Eliminado de favoritos."
+
+    Alert.alert("Favoritos",text)
+  }
 
   return (
     <View
@@ -80,7 +90,7 @@ function MediaCardItem({ img, horizontal }: IMediaCardItem) {
       >
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => toggleFavorite(img)}
+          onPress={() => handleToggleFav(img)}
         >
           <Ionicons
             name={fav ? "heart" : "heart-outline"}

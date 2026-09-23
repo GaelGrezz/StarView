@@ -1,12 +1,5 @@
 export const NasaQueries = [
   {
-    id: "apod",
-    label: "Foto del Día",
-    description: "Astronomy Picture of the Day",
-    searchQuery: "apod",
-    icon: "camera-outline",
-  },
-  {
     id: "mars_rover",
     label: "Mars Rover",
     description: "Imágenes exploradoras de Marte",
