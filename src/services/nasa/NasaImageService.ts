@@ -11,11 +11,9 @@ export class NasaImageService {
    */
   static async searchImages(params: SearchParams): Promise<AstronomyMedia[]> {
     try {
-      // 1. Seleccionar estrategia según la categoría seleccionada
       const strategy = SearchStrategyFactory.getStrategy(params.category);
       const queryString = strategy.buildQuery(params);
 
-      // 2. Realizar petición HTTP
       const response = await fetch(`${this.BASE_URL}?${queryString}`);
       if (!response.ok) {
         throw new Error(`Error en la API de la NASA: ${response.statusText}`);
@@ -23,7 +21,6 @@ export class NasaImageService {
 
       const data = await response.json();
 
-      // 3. Normalizar datos de la API de la NASA al formato interno
       return this.mapResponseToDomain(data);
     } catch (error) {
       console.error('NasaImageService Error:', error);
@@ -31,9 +28,7 @@ export class NasaImageService {
     }
   }
 
-  /**
-   * Mapper: Aísla a la UI de la estructura interna de la NASA API
-   */
+
   private static mapResponseToDomain(apiResponse: any): AstronomyMedia[] {
   const items = apiResponse?.collection?.items || [];
 
@@ -42,10 +37,8 @@ export class NasaImageService {
     .map((item: any): AstronomyMedia => {
       const itemData = item.data?.[0] || {};
       
-      // Obtener el enlace de la imagen
       let imageLink = item.links?.find((l: any) => l.rel === 'preview' || l.render === 'image')?.href || '';
 
-      // FORCE HTTPS: Convierte http:// a https:// para evitar bloqueos del SO
       if (imageLink.startsWith('http://')) {
         imageLink = imageLink.replace('http://', 'https://');
       }
